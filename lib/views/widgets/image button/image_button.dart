@@ -12,12 +12,21 @@ class ImageButton extends StatelessWidget {
     this.childType = ChildType.image,
     this.imagePath = '',
     this.text = '',
-  }) : assert(childType == ChildType.text && text != '');
+    this.height = 46,
+    this.width = 44,
+    this.fontSize = 24,
+    this.textColor = Colors.white,
+  }) : assert(childType == ChildType.text && text != '' ||
+            childType == ChildType.image && imagePath != '');
 
   final ImageColor imageColor;
   final ChildType childType;
   final String imagePath;
   final String text;
+  final double height;
+  final double width;
+  final double fontSize;
+  final Color textColor;
 
   @override
   Widget build(BuildContext context) {
@@ -27,18 +36,24 @@ class ImageButton extends StatelessWidget {
     Widget? child;
 
     if (childType == ChildType.image) {
-      child = Image.asset(imagePath);
+      child = Image.asset(
+        this.imagePath,
+        fit: BoxFit.fill,
+      );
     } else {
       child = Text(
         text,
         style: TextStyle(
-            color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+            color: textColor, fontSize: fontSize, fontWeight: FontWeight.bold),
       );
     }
 
+    print('+++> height: $height');
+    print('+++> width: $width');
+
     return Container(
-      height: 60,
-      width: 60,
+      height: height,
+      width: width,
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage(imagePath),
